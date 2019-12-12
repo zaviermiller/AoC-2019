@@ -1,5 +1,6 @@
+nodes = {}
+
 class Node:
-    nodes = {}
     def __init__(self,value):
         self.value = value
         self.children = []
@@ -10,7 +11,10 @@ class Node:
         return str(self.value)
     
     def add_child(self, value):
-        node = Node(value)
+        if value in nodes:
+            node = nodes[value]
+        else:
+            node = Node(value)
         node.parent = self
         self.children.append(node)
         return node
@@ -25,7 +29,6 @@ class Node:
         return 'test'
 
 orbits = [x.split(')') for x in open('day6_input.txt').read().split('\n')]
-nodes = {}
 # orbit_dict = dict()
 
 # def create_dict(orbit,orbit_dict):
@@ -56,13 +59,11 @@ for i,orbit in enumerate(orbits):
 
 counter = 0
 
-for node in nodes:
-    test = nodes[node]
-    local_counter = 0
-    while test.parent != None:
-        local_counter += 1
-        test = test.parent
-    counter += local_counter
+for key in nodes:
+    node = nodes[key]
+    while node.parent != None:
+        counter += 1
+        node = node.parent
 
 print(counter)
 # print(len(orbits))
