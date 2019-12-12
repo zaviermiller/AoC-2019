@@ -65,7 +65,18 @@ for key in nodes:
         counter += 1
         node = node.parent
 
-print(counter)
+points = {"YOU": [], "SAN": []}
+
+for key in nodes:
+    if key in points:
+        node = nodes[key]
+        while node.parent != None:
+            points[key].append(node.value)
+            node = node.parent
+
+intersect = [value for value in points["YOU"] if value in points["SAN"]][0]
+
+print(points["YOU"].index(intersect) + points["SAN"].index(intersect) - 2)
 # print(len(orbits))
 
 # indirect_count = 0
